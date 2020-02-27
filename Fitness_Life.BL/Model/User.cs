@@ -3,7 +3,8 @@
 
 namespace Fitness_Life.BL.Model
 {
-    class User
+    [Serializable]
+    public class User
     {
         public string Name { get; }
         public Gender Gender { get; }
@@ -25,7 +26,7 @@ namespace Fitness_Life.BL.Model
             {
                 throw new ArgumentNullException("Пол не может быть пустым или null", nameof(gender));
             }
-            if (birthDate < DateTime.Parse("01.01.1900") || birthDate < DateTime.Now)
+            if (birthDate < DateTime.Parse("01.01.1900") || birthDate > DateTime.Now)
             {
                 throw new ArgumentException("Невозможная дата рождения", nameof(birthDate));
             }

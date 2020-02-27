@@ -3,7 +3,8 @@
 
 namespace Fitness_Life.BL.Model
 {
-    class Gender
+    [Serializable]
+    public class Gender
     {
         public string Name { get; }
 
