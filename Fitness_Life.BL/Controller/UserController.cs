@@ -38,7 +38,7 @@ namespace Fitness_Life.BL.Controller
             var formatter = new BinaryFormatter();
             using (var file = new FileStream("users.dat", FileMode.OpenOrCreate))
             {
-                if (formatter.Deserialize(file) is List<User> users)
+                if (file.Length>0 && formatter.Deserialize(file) is List<User> users)
                 {
                     return users;
                 }

@@ -22,7 +22,7 @@ namespace Fitness_Life.CMD
                 var gender = Console.ReadLine();
                 var birthDate = ParceDateTime();
                 var weight = ParceDouble("Введите вес");
-                var height = ParceDouble("Введите рост (м.)");
+                var height = ParceDouble("Введите рост (cм.)");
                 userController.SetNewUserData(gender, birthDate, weight, height);
             }
             Console.WriteLine(userController.CurrentUser);
@@ -50,7 +50,7 @@ namespace Fitness_Life.CMD
         {
             while (true)
             {
-                Console.Write($"(пример ''85.00''): {name} ");
+                Console.Write($"(пример ''85''): {name} ");
                 if (double.TryParse(Console.ReadLine(), out double value))
                 {
                     return value;                                       
