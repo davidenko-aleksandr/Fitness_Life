@@ -7,8 +7,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Fitness_Life.BL.Controller
 {
-    public class UserController
+    public class UserController: ControllerBase
     {
+        private const string USERS_FILE_NAME = "users.dat";
         public List<User> Users { get; }
         public User CurrentUser { get; }
         public bool IsNewUser { get; } = false;
@@ -35,18 +36,7 @@ namespace Fitness_Life.BL.Controller
 
         public List<User> GetUsersData()
         {
-            var formatter = new BinaryFormatter();
-            using (var file = new FileStream("users.dat", FileMode.OpenOrCreate))
-            {
-                if (file.Length>0 && formatter.Deserialize(file) is List<User> users)
-                {
-                    return users;
-                }
-                else
-                {
-                    return new List<User>();
-                }
-            }
+            return Load<List<User>>(USERS_FILE_NAME) ?? new List<User>();            
         }
         public void SetNewUserData(string genderName, DateTime birthDate, double weight=1, double haight=1)
         {
@@ -58,11 +48,7 @@ namespace Fitness_Life.BL.Controller
         }
         public void Save()
         {
-            var formatter = new BinaryFormatter();
-            using (var file = new FileStream("users.dat", FileMode.OpenOrCreate))
-            {
-                formatter.Serialize(file, Users);
-            }
+            Save(USERS_FILE_NAME, Users);
         }
        
     }
