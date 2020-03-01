@@ -19,7 +19,7 @@ namespace Fitness_Life.BL.Controller
             var formatter = new BinaryFormatter();
             using (var file = new FileStream(fileName, FileMode.OpenOrCreate))
             {
-                if (file.Length < 0 && formatter.Deserialize(file) is T items)
+                if (file.Length > 0 && formatter.Deserialize(file) is T items)
                 {
                     return items;
                 }

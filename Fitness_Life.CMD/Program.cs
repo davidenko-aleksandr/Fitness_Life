@@ -2,7 +2,9 @@
 using Fitness_Life.BL.Model;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,24 +14,26 @@ namespace Fitness_Life.CMD
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Вас приветствует приложение Fitness Life!");
-            Console.WriteLine("Введите имя пользователя");
+            var culture = CultureInfo.CreateSpecificCulture("en-us");
+            var resourceManager = new ResourceManager("Fitness_Life.CMD.Languages.Messages", typeof(Program).Assembly);
+            Console.WriteLine(resourceManager.GetString("Hello", culture));
+            Console.WriteLine(resourceManager.GetString("EnterName", culture));
             var name = Console.ReadLine();
             
             var userController = new UserController(name);
             var eatingController = new EatingController(userController.CurrentUser);
             if (userController.IsNewUser)
             {
-                Console.Write("Введите пол: ");
+                Console.Write(resourceManager.GetString("EnterGender", culture));
                 var gender = Console.ReadLine();
                 var birthDate = ParceDateTime();
-                var weight = ParceDouble("Введите вес ");
-                var height = ParceDouble("Введите рост (cм.) ");
+                var weight = ParceDouble(resourceManager.GetString("EnterWeight", culture));
+                var height = ParceDouble(resourceManager.GetString("EnterHeight", culture));
                 userController.SetNewUserData(gender, birthDate, weight, height);
             }
             Console.WriteLine(userController.CurrentUser);
-            Console.WriteLine("Что вы хотите сделать?");
-            Console.WriteLine("E - ввести прием пищи");
+            Console.WriteLine(resourceManager.GetString("WhatToDo", culture));
+            Console.WriteLine(resourceManager.GetString("AddFood", culture));
             Console.WriteLine();
             var key = Console.ReadKey();
             if (key.Key==ConsoleKey.E)
@@ -38,22 +42,23 @@ namespace Fitness_Life.CMD
                 eatingController.Add(foods.Food, foods.Weight);
                 foreach(var item in eatingController.Eating.Foods)
                 {
-                    Console.WriteLine($"/t{item.Key} - {item.Value}");
+                    Console.WriteLine($"{item.Key} - {item.Value}");
                 }
             }
             Console.ReadLine();         
-
         }
 
         private static (Food Food, double Weight) EnterEating()
         {
-            Console.WriteLine("Введите имя продукта: ");
+            var culture = CultureInfo.CreateSpecificCulture("en-us");
+            var resourceManager = new ResourceManager("Fitness_Life.CMD.Languages.Messages", typeof(Program).Assembly);
+            Console.WriteLine(resourceManager.GetString("EnterProductName", culture));
             var name = Console.ReadLine();            
-            var weight = ParceDouble("вес порции ");            
-            var calories = ParceDouble("введите каллорийность: ");
-            var proteins = ParceDouble("введите белки: ");
-            var fats = ParceDouble("Введите жири: ");
-            var carbohydrates = ParceDouble("Введите углеводы: ");
+            var weight = ParceDouble(resourceManager.GetString("WeightProducts", culture));            
+            var calories = ParceDouble(resourceManager.GetString("CaloriesProduct", culture));
+            var proteins = ParceDouble(resourceManager.GetString("ProteinsProduct", culture));
+            var fats = ParceDouble(resourceManager.GetString("FatsProduct", culture));
+            var carbohydrates = ParceDouble(resourceManager.GetString("Capbohydrates", culture));
 
             var product = new Food(name, proteins, fats, calories,  carbohydrates);
             return (Food: product, Weight: weight);
@@ -61,17 +66,19 @@ namespace Fitness_Life.CMD
 
         private static DateTime ParceDateTime()
         {
+            var culture = CultureInfo.CreateSpecificCulture("en-us");
+            var resourceManager = new ResourceManager("Fitness_Life.CMD.Languages.Messages", typeof(Program).Assembly);
             DateTime birthDate;
             while (true)
             {
-                Console.Write("Введите дату рождения (пример ''22.11.1990''): ");
+                Console.Write(resourceManager.GetString("EnterBirthdate", culture));
                 if (DateTime.TryParse(Console.ReadLine(), out birthDate))
                 {
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("Неверный формат записи");
+                    Console.WriteLine(resourceManager.GetString("WrongFormat", culture));
                 }
             }
             return birthDate;
@@ -80,7 +87,7 @@ namespace Fitness_Life.CMD
         {
             while (true)
             {
-                Console.Write($"{name} (пример ''85''):  ");
+                Console.Write($"{name}  ");
                 if (double.TryParse(Console.ReadLine(), out double value))
                 {
                     return value;                                       
@@ -88,6 +95,7 @@ namespace Fitness_Life.CMD
                 else
                 {
                     Console.WriteLine("Неверный формат записи");
+                    Console.WriteLine("Wrong format");
                 }
             }
         }
