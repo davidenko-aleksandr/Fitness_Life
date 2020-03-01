@@ -117,14 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddExercise" xml:space="preserve">
+    <value>Добавить упражнение "L"</value>
+  </data>
   <data name="AddFood" xml:space="preserve">
-    <value>Добавить прием пищи нажмите "Е"</value>
+    <value>Добавить прием пищи нажмите "D"</value>
   </data>
   <data name="CaloriesProduct" xml:space="preserve">
     <value>Введите количество каллорий</value>
   </data>
   <data name="Capbohydrates" xml:space="preserve">
     <value>Введите колличество углеводов</value>
+  </data>
+  <data name="EnergyMin" xml:space="preserve">
+    <value>Расход энергии в минуту</value>
   </data>
   <data name="EnterBirthdate" xml:space="preserve">
     <value>Введите дату рождения</value>
@@ -143,6 +149,18 @@
   </data>
   <data name="EnterWeight" xml:space="preserve">
     <value>Введите вес</value>
+  </data>
+  <data name="ExerciseFinish" xml:space="preserve">
+    <value>Конец упражнения</value>
+  </data>
+  <data name="ExerciseName" xml:space="preserve">
+    <value>Введите название упражниения</value>
+  </data>
+  <data name="ExerciseStart" xml:space="preserve">
+    <value>Начало упражнения</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Выйти  из приложения "Q"</value>
   </data>
   <data name="FatsProduct" xml:space="preserve">
     <value>Введите количество жиров в продукте</value>

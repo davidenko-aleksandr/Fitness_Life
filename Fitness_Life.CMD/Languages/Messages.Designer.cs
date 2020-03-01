@@ -61,7 +61,16 @@ namespace Fitness_Life.CMD.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Добавить прием пищи нажмите &quot;Е&quot;.
+        ///   Looks up a localized string similar to Добавить упражнение &quot;L&quot;.
+        /// </summary>
+        internal static string AddExercise {
+            get {
+                return ResourceManager.GetString("AddExercise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Добавить прием пищи нажмите &quot;D&quot;.
         /// </summary>
         internal static string AddFood {
             get {
@@ -84,6 +93,15 @@ namespace Fitness_Life.CMD.Languages {
         internal static string Capbohydrates {
             get {
                 return ResourceManager.GetString("Capbohydrates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Расход энергии в минуту.
+        /// </summary>
+        internal static string EnergyMin {
+            get {
+                return ResourceManager.GetString("EnergyMin", resourceCulture);
             }
         }
         
@@ -138,6 +156,42 @@ namespace Fitness_Life.CMD.Languages {
         internal static string EnterWeight {
             get {
                 return ResourceManager.GetString("EnterWeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Конец упражнения.
+        /// </summary>
+        internal static string ExerciseFinish {
+            get {
+                return ResourceManager.GetString("ExerciseFinish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Введите название упражниения.
+        /// </summary>
+        internal static string ExerciseName {
+            get {
+                return ResourceManager.GetString("ExerciseName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Начало упражнения.
+        /// </summary>
+        internal static string ExerciseStart {
+            get {
+                return ResourceManager.GetString("ExerciseStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Выйти  из приложения &quot;Q&quot;.
+        /// </summary>
+        internal static string Exit {
+            get {
+                return ResourceManager.GetString("Exit", resourceCulture);
             }
         }
         

@@ -1,12 +1,9 @@
 ﻿using Fitness_Life.BL.Controller;
 using Fitness_Life.BL.Model;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Fitness_Life.CMD
 {
@@ -18,34 +15,68 @@ namespace Fitness_Life.CMD
             var resourceManager = new ResourceManager("Fitness_Life.CMD.Languages.Messages", typeof(Program).Assembly);
             Console.WriteLine(resourceManager.GetString("Hello", culture));
             Console.WriteLine(resourceManager.GetString("EnterName", culture));
-            var name = Console.ReadLine();
-            
+            var name = Console.ReadLine();            
             var userController = new UserController(name);
             var eatingController = new EatingController(userController.CurrentUser);
+            var exerciseController = new ExerciseController(userController.CurrentUser);
+
             if (userController.IsNewUser)
             {
                 Console.Write(resourceManager.GetString("EnterGender", culture));
                 var gender = Console.ReadLine();
-                var birthDate = ParceDateTime();
+                var birthDate = ParceDateTime(resourceManager.GetString("EnterBirthdate", culture));
                 var weight = ParceDouble(resourceManager.GetString("EnterWeight", culture));
                 var height = ParceDouble(resourceManager.GetString("EnterHeight", culture));
                 userController.SetNewUserData(gender, birthDate, weight, height);
             }
             Console.WriteLine(userController.CurrentUser);
-            Console.WriteLine(resourceManager.GetString("WhatToDo", culture));
-            Console.WriteLine(resourceManager.GetString("AddFood", culture));
-            Console.WriteLine();
-            var key = Console.ReadKey();
-            if (key.Key==ConsoleKey.E)
+
+            while (true)
             {
-                var foods = EnterEating();
-                eatingController.Add(foods.Food, foods.Weight);
-                foreach(var item in eatingController.Eating.Foods)
+                Console.WriteLine(resourceManager.GetString("WhatToDo", culture));
+                Console.WriteLine(resourceManager.GetString("AddFood", culture));
+                Console.WriteLine(resourceManager.GetString("AddExercise", culture));
+                Console.WriteLine(resourceManager.GetString("Exit", culture));
+                Console.WriteLine();
+                var key = Console.ReadKey();
+                switch (key.Key)
                 {
-                    Console.WriteLine($"{item.Key} - {item.Value}");
+                    case ConsoleKey.D:
+                        var foods = EnterEating();
+                        eatingController.Add(foods.Food, foods.Weight);
+                        foreach (var item in eatingController.Eating.Foods)
+                        {
+                            Console.WriteLine($"{item.Key} - {item.Value}");
+                        }
+                        break;
+                    case ConsoleKey.L:
+                        var exe = EnterExercise();
+                        exerciseController.Add(exe.Activity, exe.Begin,  exe.End);
+                        foreach(var item in exerciseController.Exercises)
+                        {
+                            Console.WriteLine($"{item.Activity} c {item.Start.ToShortTimeString()} до {item.Finish.ToShortTimeString()}");
+                        } 
+                            break;
+                    case ConsoleKey.Q:
+                        Environment.Exit(0);
+                        break;
+
                 }
+                Console.ReadLine();
             }
-            Console.ReadLine();         
+        }
+
+        private static (DateTime Begin, DateTime End, Activity Activity) EnterExercise()
+        {
+            var culture = CultureInfo.CreateSpecificCulture("en-us");
+            var resourceManager = new ResourceManager("Fitness_Life.CMD.Languages.Messages", typeof(Program).Assembly);
+            Console.WriteLine(resourceManager.GetString("ExerciseName", culture));
+            var name = Console.ReadLine();
+            var energy = ParceDouble(resourceManager.GetString("EnergyMin", culture));
+            var begin = ParceDateTime(resourceManager.GetString("ExerciseStart", culture));
+            var end = ParceDateTime(resourceManager.GetString("ExerciseFinish", culture));
+            var activity = new Activity(name, energy);
+            return (begin, end, activity);
         }
 
         private static (Food Food, double Weight) EnterEating()
@@ -64,7 +95,7 @@ namespace Fitness_Life.CMD
             return (Food: product, Weight: weight);
         }
 
-        private static DateTime ParceDateTime()
+        private static DateTime ParceDateTime(string name)
         {
             var culture = CultureInfo.CreateSpecificCulture("en-us");
             var resourceManager = new ResourceManager("Fitness_Life.CMD.Languages.Messages", typeof(Program).Assembly);
@@ -99,5 +130,6 @@ namespace Fitness_Life.CMD
                 }
             }
         }
+        
     }
 }
